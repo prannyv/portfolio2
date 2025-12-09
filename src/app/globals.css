@@ -3,24 +3,38 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --background-card-grey: #e5e7eb; /* Neutral grey for card borders/backgrounds */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-background-card-grey: var(--background-card-grey);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .liquid-glass {
+    border-radius: 28px;
+    backdrop-filter: brightness(1.1) blur(2px) url(#displacementFilter);
+    /* Fallback for browsers that don't support url() in backdrop-filter (Firefox mostly) */
+    @supports not (backdrop-filter: url(#displacementFilter)) {
+      backdrop-filter: brightness(1.1) blur(10px);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
   }
-}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Inner glow/rim effect */
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1; /* Behind content */
+    pointer-events: none;
+    border-radius: 28px;
+    box-shadow: 
+      inset 6px 6px 0px -6px rgba(255, 255, 255, 0.7), 
+      inset 0 0 8px 1px rgba(255, 255, 255, 0.7);
+  }
 }

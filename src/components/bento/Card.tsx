@@ -45,6 +45,11 @@ export function Card({
     }
   }, [isCardHovered]);
 
+  // Check if padding is 0 (p-0 in className)
+  const hasNoPadding = className?.includes("p-0");
+  // Inner border radius: outer (12px from rounded-xl) - border (5px) = 7px
+  const innerBorderRadius = hasNoPadding ? "rounded-[7px]" : "";
+
   return (
     <div 
       ref={cardRef}
@@ -56,7 +61,9 @@ export function Card({
         className
       )}
     >
-      {children}
+      <div className={cn("h-full w-full", hasNoPadding && "overflow-hidden", innerBorderRadius)}>
+        {children}
+      </div>
       <CaseButton 
         href={caseHref} 
         label={caseLabel}

@@ -4,6 +4,8 @@ import { HackWesternCanvas } from "@/components/bento/HackWesternCanvas";
 import { CardOverlay } from "@/components/bento/CardOverlay";
 import { PhotoCard } from "@/components/bento/PhotoCard";
 import { FeaturedPartners } from "@/components/bento/FeaturedPartners";
+import { FigmaPhoneEmbed } from "@/components/bento/FigmaPhoneEmbed";
+import { BasketballHighlights } from "@/components/bento/BasketballHighlights";
 
 export default function Home() {
   return (
@@ -29,12 +31,11 @@ export default function Home() {
 
         {/* Row 2: MediumV (1x2) + Small (1x1) filling right side of Large */}
         <Card 
-          className="col-span-1 row-span-2 min-h-[680px] bg-green-100"
-          caseLabel="View Medium Vertical 2 Case Study"
+          className="col-span-1 row-span-2 min-h-[680px] bg-[#050505] p-0"
+          caseTitle="RBC Design Thinking"
+          caseSubtitle="Wealth wizards"
         >
-          <div className="h-full flex items-center justify-center">
-            <h2 className="text-xl font-bold text-gray-800">Medium Vertical 2</h2>
-          </div>
+          <FigmaPhoneEmbed />
         </Card>
         <Card 
           className="col-span-1 row-span-1 min-h-[330px] p-0"
@@ -50,7 +51,7 @@ export default function Home() {
           caseTitle="Google Workspace Marketplace"
           caseSubtitle="Featured Partner Apps Banner"
         >
-          <FeaturedPartners />
+          <FeaturedPartners backgroundImage="/googleBackground.png" />
         </Card>
         <Card 
           className="col-span-1 row-span-1 min-h-[330px] bg-pink-100"
@@ -63,12 +64,10 @@ export default function Home() {
 
         {/* Row 4: MediumH (2x1) + Large (2x2) starts */}
         <Card 
-          className="col-span-1 sm:col-span-2 row-span-1 min-h-[330px] bg-indigo-100"
-          caseLabel="View Medium Horizontal 4 Case Study"
+          className="col-span-1 sm:col-span-2 row-span-1 min-h-[330px] p-0"
+          caseLabel="View Basketball Highlights Case Study"
         >
-          <div className="h-full flex items-center justify-center">
-            <h2 className="text-xl font-bold text-gray-800">Medium Horizontal 4</h2>
-          </div>
+          <BasketballHighlights />
         </Card>
         <Card 
           className="col-span-1 sm:col-span-2 row-span-2 min-h-[680px] bg-orange-100"

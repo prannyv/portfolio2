@@ -146,7 +146,7 @@ export function PhotoCard() {
 
   return (
     <div 
-      className="relative w-full h-full overflow-hidden rounded-lg"
+      className="relative w-full h-full overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onMouseMove={(e) => {
@@ -158,7 +158,7 @@ export function PhotoCard() {
       }}
     >
       {/* Single Photo Display with Auto-Rotation */}
-      <div className="relative w-full h-full overflow-hidden rounded-sm bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200">
+      <div className="relative w-full h-full overflow-hidden bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200">
         {currentPhoto ? (
           <AnimatePresence>
             <motion.img

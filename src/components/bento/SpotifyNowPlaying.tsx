@@ -122,15 +122,15 @@ export function SpotifyNowPlaying() {
       </div>
 
       {/* Song Title - Bold */}
-      <div className="mb-0 min-w-0">
-        <h3 className="text-white font-bold text-base sm:text-lg line-clamp-2 overflow-hidden">
+      <div className="mb-0 min-w-0 w-full overflow-hidden">
+        <h3 className="text-white font-bold text-base sm:text-lg truncate">
           {spotifyData.title}
         </h3>
       </div>
 
       {/* Artist Name */}
-      <div className="min-w-0">
-        <p className="text-white/80 text-xs sm:text-sm line-clamp-1 overflow-hidden">
+      <div className="min-w-0 w-full overflow-hidden">
+        <p className="text-white/80 text-xs sm:text-sm truncate">
           {spotifyData.artist}
         </p>
       </div>

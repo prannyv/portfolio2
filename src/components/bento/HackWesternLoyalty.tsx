@@ -12,6 +12,7 @@ export function HackWesternLoyalty() {
   const [walletType, setWalletType] = useState<WalletType>('apple');
 
   const handleOpenWallet = (type: WalletType) => {
+    if (showWalletPreview) return; // Don't change wallet type if popup is already open
     setWalletType(type);
     setShowWalletPreview(true);
   };
@@ -22,11 +23,10 @@ export function HackWesternLoyalty() {
     // Show pill on main screen after modal closes
     setTimeout(() => {
       setShowAddedPill(true);
-      // Auto-hide the pill after 2.5 seconds
       setTimeout(() => {
         setShowAddedPill(false);
-      }, 2500);
-    }, 150);
+      }, 1000);
+    }, 200);
   };
 
   const handleClose = () => {

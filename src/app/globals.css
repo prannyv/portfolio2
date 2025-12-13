@@ -56,6 +56,15 @@
     font-family: var(--font-geist-sans), system-ui, sans-serif;
   }
 
+  /* Grid paper background */
+  .bg-grid-paper {
+    background-color: #fafafa;
+    background-image: 
+      linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+      linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
   .liquid-glass {
     border-radius: 28px;
     backdrop-filter: brightness(1.1) blur(2px) url(#displacementFilter);

@@ -62,15 +62,14 @@ export function Navbar() {
             >
               Work
             </Link>
-            <Link 
-              href="/contact" 
-              className={cn(
-                "hover:text-black transition-colors",
-                pathname === "/contact" ? "text-lg font-bold text-black" : "text-sm"
-              )}
+            <a 
+              href="/pranav_resume_current.pdf" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-black transition-colors text-sm"
             >
-              Contact
-            </Link>
+              Resume
+            </a>
           </div>
         </div>
       </nav>

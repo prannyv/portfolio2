@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
+  const pathname = usePathname();
+
   return (
     <>
       {/* SVG Filter for Liquid Effect */}
@@ -29,17 +34,41 @@ export function Navbar() {
           "shadow-[-8px_-10px_46px_rgba(0,0,0,0.1)]", // subtle drop shadow
           "text-gray-900" // Ensure text is dark enough
         )}>
-          <Link href="/" className="font-bold text-lg hover:opacity-80 transition-opacity z-10">
+          <Link 
+            href="/" 
+            className={cn(
+              "hover:opacity-80 transition-opacity z-10 font-medium text-gray-700",
+              pathname === "/" ? "text-lg font-bold text-black" : "text-sm"
+            )}
+          >
             Portfolio
           </Link>
-          <div className="flex items-center gap-8 text-sm font-medium text-gray-700 z-10">
-            <Link href="#about" className="hover:text-black transition-colors">
+          <div className="flex items-center gap-8 font-medium text-gray-700 z-10">
+            <Link 
+              href="/about" 
+              className={cn(
+                "hover:text-black transition-colors",
+                pathname === "/about" ? "text-lg font-bold text-black" : "text-sm"
+              )}
+            >
               About
             </Link>
-            <Link href="#work" className="hover:text-black transition-colors">
+            <Link 
+              href="/work" 
+              className={cn(
+                "hover:text-black transition-colors",
+                pathname === "/work" ? "text-lg font-bold text-black" : "text-sm"
+              )}
+            >
               Work
             </Link>
-            <Link href="#contact" className="hover:text-black transition-colors">
+            <Link 
+              href="/contact" 
+              className={cn(
+                "hover:text-black transition-colors",
+                pathname === "/contact" ? "text-lg font-bold text-black" : "text-sm"
+              )}
+            >
               Contact
             </Link>
           </div>

@@ -423,6 +423,7 @@ export function BasketballHighlights() {
                 )}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                transition={{ ease: "easeOut", duration: 0.03 }}
               >
                 {/* Player Number - Smaller */}
                 <div

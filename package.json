@@ -16,8 +16,10 @@
     "framer-motion": "^12.23.25",
     "interactjs": "^1.10.27",
     "next": "16.0.7",
+    "node-vibrant": "^4.0.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "sharp": "^0.33.5",
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {

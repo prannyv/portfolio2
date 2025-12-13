@@ -43,6 +43,7 @@ export function PhotoCard() {
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [isPhotoDark, setIsPhotoDark] = useState(false);
+  const [isPopupMounted, setIsPopupMounted] = useState(false);
   const [categories, setCategories] = useState<PhotoCategory[]>(
     baseCategories.map(cat => ({ ...cat, photos: [] }))
   );
@@ -128,7 +129,7 @@ export function PhotoCard() {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [selectedCategory]);
+  }, [selectedCategory, categories]);
 
   // Reset photo index when category changes
   useEffect(() => {
@@ -143,6 +144,18 @@ export function PhotoCard() {
       setIsPhotoDark(false);
     }
   }, [currentPhoto]);
+
+  // Enable pill animation after popup mount animation completes
+  useEffect(() => {
+    if (isHovered) {
+      const timer = setTimeout(() => {
+        setIsPopupMounted(true);
+      }, 200); // Match the popup animation duration
+      return () => clearTimeout(timer);
+    } else {
+      setIsPopupMounted(false);
+    }
+  }, [isHovered]);
 
   return (
     <div 
@@ -185,11 +198,11 @@ export function PhotoCard() {
       </div>
 
       {/* Photos Icon in Top Right */}
-      <div className="absolute top-6 right-6 z-20">
+      <div className="absolute top-4 right-4 z-20">
         <img
           src="/photos.png"
           alt="Photos"
-          className="w-[52px] h-[52px] scale-150 object-contain"
+          className="w-12 h-12 object-contain"
         />
       </div>
 
@@ -200,14 +213,14 @@ export function PhotoCard() {
             initial={{ y: '100%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-            className="photo-popup liquid-glass absolute bottom-0 left-0 right-0 z-30 pointer-events-auto py-2.5 px-4 mx-3 mb-3"
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="photo-popup liquid-glass absolute bottom-0 left-0 right-0 z-30 pointer-events-auto py-1.5 px-4 mx-3 mb-3"
             style={{ willChange: 'transform, opacity' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
             {/* Category Selector */}
-            <div className="relative flex p-1.5">
+            <div className="relative flex p-1">
               {/* Category Icons - Each takes exactly 1/4 of the space */}
               {categories.map((category, index) => {
                 const IconComponent = category.icon;
@@ -233,13 +246,14 @@ export function PhotoCard() {
                           width: 'calc(100%)',
                           borderRadius: '24px',
                         }}
-                        layoutId="pill"
-                        transition={{ 
+                        layoutId={isPopupMounted ? "pill" : undefined}
+                        initial={!isPopupMounted ? { opacity: 1 } : false}
+                        transition={isPopupMounted ? { 
                           type: 'spring', 
                           stiffness: 300, 
                           damping: 35,
                           layout: { duration: 0.3 }
-                        }}
+                        } : { duration: 0 }}
                       />
                     )}
                     <IconComponent className="relative z-10 w-6 h-6" />

@@ -64,6 +64,7 @@ export default function Home() {
           className="col-span-1 sm:col-span-2 row-span-1 min-h-[330px] p-0"
           caseTitle="🐎 HackWestern 2025"
           caseSubtitle="Infinite Canvas Home Page"
+          caseHref="/work/hackwestern"
         >
           <HackWesternCanvas />
         </Card>
@@ -73,6 +74,7 @@ export default function Home() {
           className="col-span-1 row-span-2 min-h-[680px] p-0"
           caseTitle="🐎 HackWestern 12"
           caseSubtitle="Personal Badge System"
+          caseHref="/work/hackwestern"
         >
           <HackWesternLoyalty />
         </Card>
@@ -89,6 +91,7 @@ export default function Home() {
           className="col-span-1 sm:col-span-2 row-span-1 min-h-[330px] p-0"
           caseTitle="🛒 Google Workspace Marketplace"
           caseSubtitle="Featured Partner Apps Banner"
+          caseHref="/work/marketplace"
         >
           <FeaturedPartners backgroundImage="/googleBackground.png" />
         </Card>
@@ -112,6 +115,7 @@ export default function Home() {
           className="col-span-1 row-span-2 min-h-[680px] bg-[#050505] p-0"
           caseTitle="💵 RBC Design Thinking"
           caseSubtitle="Wealth Wizards"
+          caseHref="/work/designthinking"
         >
           <FigmaPhoneEmbed />
         </Card>
@@ -119,7 +123,9 @@ export default function Home() {
         {/* Row 4-5: MediumH (2x1) + Small + Small */}
         <Card 
           className="col-span-1 sm:col-span-2 row-span-1 min-h-[330px] p-0"
-          caseLabel="View Basketball Highlights Case Study"
+          caseTitle="🏀 NBA Highlights"
+          caseSubtitle="Automated highlight generation"
+          caseHref="/work/nbahighlights"
         >
           <BasketballHighlights />
         </Card>
@@ -127,6 +133,7 @@ export default function Home() {
           className="col-span-1 row-span-1 min-h-[330px] p-0"
           caseTitle="🥣 Miso API"
           caseSubtitle="NLP-powered message moderation"
+          caseHref="/work/miso"
         >
           <ToxicityDetectionCard />
         </Card>
@@ -134,6 +141,7 @@ export default function Home() {
           className="col-span-1 row-span-1 min-h-[330px] p-0"
           caseTitle="🎵 Mookie"
           caseSubtitle="Image-to-music queue system"
+          caseHref="/work/mookie"
         >
           <MookieCard />
         </Card>

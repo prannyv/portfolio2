@@ -57,7 +57,7 @@ export function Navbar() {
               href="/work" 
               className={cn(
                 "hover:text-black transition-colors",
-                pathname === "/work" ? "text-lg font-bold text-black" : "text-sm"
+                pathname.startsWith("/work") ? "text-lg font-bold text-black" : "text-sm"
               )}
             >
               Work

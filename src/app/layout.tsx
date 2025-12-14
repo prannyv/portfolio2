@@ -6,8 +6,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { CardHoverProvider } from "@/contexts/CardHoverContext";
 
 export const metadata: Metadata = {
-  title: "Bento Portfolio",
-  description: "A minimal bento grid portfolio",
+  title: "Pranav Varma",
+  description: "welcome to my portfolio!",
 };
 
 export default function RootLayout({

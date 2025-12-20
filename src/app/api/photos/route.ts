@@ -17,7 +17,7 @@ export async function GET() {
 
     files.forEach((file) => {
       // Match pattern: cat1pic1.jpg, cat2pic3.png, etc.
-      const match = file.match(/^cat(\d+)pic(\d+)\.(jpg|jpeg|png|webp)$/i);
+      const match = file.match(/^cat(\d+)pic(\d+)\.(webp)$/i);
       if (match) {
         const categoryNum = match[1];
         const photoNum = match[2];

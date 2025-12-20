@@ -61,7 +61,7 @@ export function Card({
         className
       )}
     >
-      <div className={cn("h-full w-full", hasNoPadding && "overflow-hidden", innerBorderRadius)}>
+      <div className={cn("h-full w-full relative", hasNoPadding && "overflow-hidden", innerBorderRadius)}>
         {children}
       </div>
       <CaseButton 

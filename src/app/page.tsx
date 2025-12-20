@@ -10,6 +10,7 @@ import { SpotifyNowPlaying } from "@/components/bento/SpotifyNowPlaying";
 import { HackWesternLoyalty } from "@/components/bento/HackWesternLoyalty";
 import { ToxicityDetectionCard } from "@/components/bento/ToxicityDetectionCard";
 import { MookieCard } from "@/components/bento/MookieCard";
+import { PokeloComparison } from "@/components/bento/PokeloComparison";
 
 export default function Home() {
   return (
@@ -102,15 +103,25 @@ export default function Home() {
           <SpotifyNowPlaying />
         </Card>
 
-        {/* Row 4: Vertical Card 1 (1x2) + Vertical Card 2 (1x2) */}
-        <Card 
-          className="col-span-1 row-span-2 min-h-[680px] bg-gray-200"
-          showCaseButton={false}
-        >
-          <div className="h-full flex items-center justify-center">
-            <h2 className="text-xl font-bold text-gray-400">Coming Soon</h2>
-          </div>
-        </Card>
+        {/* Row 4: Stacked Small Cards (1x2) + Vertical Card (1x2) */}
+        <div className="col-span-1 row-span-2 min-h-[680px] flex flex-col gap-4">
+          <Card 
+            className="flex-1 p-0"
+            caseTitle="🎴 Pokelo"
+            caseSubtitle="Rank your favourite cards"
+            caseHref="/work/pokelo"
+          >
+            <PokeloComparison />
+          </Card>
+          <Card 
+            className="flex-1 bg-gray-200"
+            showCaseButton={false}
+          >
+            <div className="h-full flex items-center justify-center">
+              <h2 className="text-xl font-bold text-gray-400">Coming Soon</h2>
+            </div>
+          </Card>
+        </div>
         <Card 
           className="col-span-1 row-span-2 min-h-[680px] bg-[#050505] p-0"
           caseTitle="💵 RBC Design Thinking"

@@ -15,7 +15,7 @@ const DEFAULT_SONG = {
   title: 'Cross Your Mind',
   artist: 'Shelly',
   album: 'Shelly 2',
-  albumImageUrl: 'https://i.scdn.co/image/ab67616d000048510686f66ebbda3d1c7a7e5d8e',
+  albumImageUrl: "https://i.scdn.co/image/ab67616d00001e020686f66ebbda3d1c7a7e5d8e",
   songUrl: 'https://open.spotify.com/track/3a3zDlE4bgI6ZvU00m6o84',
 };
 

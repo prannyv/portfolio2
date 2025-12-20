@@ -116,3 +116,252 @@
     background-color: rgba(255, 255, 255, 0.5);
   }
 }
+
+/* Pokelo Comparison Styles */
+:root {
+  /* Muted red/blue color scheme with saturation effects */
+  --pokelo-left-color: rgba(231, 76, 60, 0.2); /* Translucent red - normal state */
+  --pokelo-right-color: rgba(52, 152, 219, 0.2); /* Translucent blue - normal state */
+  --pokelo-left-hover: rgba(231, 76, 60, 0.4); /* More saturated red - hover state */
+  --pokelo-right-hover: rgba(52, 152, 219, 0.4); /* More saturated blue - hover state */
+  --pokelo-left-selected: rgba(231, 76, 60, 0.7); /* Most saturated red - selected state */
+  --pokelo-right-selected: rgba(52, 152, 219, 0.7); /* Most saturated blue - selected state */
+}
+
+.pokelo-comparison-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pokelo-header {
+  background-color: #e3350d;
+  padding: 10px 12px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.pokelo-title {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.pokelo-split-screen {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  position: relative;
+}
+
+.pokelo-split-side {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease-out;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.pokelo-left-side {
+  background-color: var(--pokelo-left-color);
+}
+
+.pokelo-right-side {
+  background-color: var(--pokelo-right-color);
+}
+
+.pokelo-left-side.hovered {
+  background-color: var(--pokelo-left-hover);
+  flex: 1.15;
+}
+
+.pokelo-right-side.hovered {
+  background-color: var(--pokelo-right-hover);
+  flex: 1.15;
+}
+
+.pokelo-left-side.selected {
+  background-color: var(--pokelo-left-selected);
+  flex: 1.15;
+}
+
+.pokelo-right-side.selected {
+  background-color: var(--pokelo-right-selected);
+  flex: 1.15;
+}
+
+.pokelo-split-divider {
+  width: 3px;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.pokelo-card-container {
+  width: 58%;
+  max-width: 144px;
+  transition: transform 0.25s ease-out;
+  z-index: 2;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.pokelo-split-side:hover .pokelo-card-container {
+  transform: translateY(-5px) scale(1.08);
+}
+
+.pokelo-split-screen.selection-made .pokelo-split-side:hover .pokelo-card-container {
+  transform: none;
+}
+
+.pokelo-card {
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s;
+  width: 100%;
+}
+
+.pokelo-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pokelo-card-image-container {
+  position: relative;
+  padding-top: 140%; /* Aspect ratio for Pokémon cards */
+  overflow: hidden;
+  background-color: #f8f8f8;
+  border-radius: 6px;
+}
+
+.pokelo-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0;
+}
+
+.pokelo-card-image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5e6a3;
+  color: #666;
+  font-weight: bold;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.pokelo-card-name-placeholder {
+  font-size: 0.65rem;
+}
+
+.pokelo-arrow-indicator {
+  transition: all 0.15s ease-out;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.6;
+}
+
+.pokelo-arrow-indicator svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 2.5;
+}
+
+.pokelo-arrow-left {
+  color: #e74c3c;
+}
+
+.pokelo-arrow-right {
+  color: #3498db;
+}
+
+.pokelo-arrow-left.hovered {
+  transform: scale(1.3);
+  opacity: 1;
+}
+
+.pokelo-arrow-right.hovered {
+  transform: scale(1.3);
+  opacity: 1;
+}
+
+.pokelo-arrow-left.selected {
+  transform: scale(1.4);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(231, 76, 60, 0.6));
+}
+
+.pokelo-arrow-right.selected {
+  transform: scale(1.4);
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(52, 152, 219, 0.6));
+}
+
+.pokelo-result-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.02);
+  padding-bottom: 0.75rem;
+}
+
+.pokelo-result-message {
+  background-color: #ffcc00;
+  color: #222;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-family: var(--font-geist-sans);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 11;
+  text-align: center;
+}
+
+.pokelo-result-message p {
+  margin-bottom: 0.5rem;
+  font-size: 0.7rem;
+}
+
+.pokelo-next-button {
+  background-color: #3c5aa6;
+  color: #fff;
+  border: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: var(--font-geist-sans);
+  font-weight: 500;
+  font-size: 0.7rem;
+}
+
+.pokelo-next-button:hover {
+  background-color: #2c4a96;
+}

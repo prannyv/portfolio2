@@ -3,10 +3,36 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
-import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
-import FastfoodOutlinedIcon from '@mui/icons-material/FastfoodOutlined';
+
+// Inline SVG icons to avoid loading the entire @mui/icons-material library
+const SunIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+  </svg>
+);
+
+const LocationIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <path d="M12 21c-4-4-8-7.5-8-12a8 8 0 1116 0c0 4.5-4 8-8 12z" />
+    <circle cx="12" cy="9" r="3" />
+  </svg>
+);
+
+const PeopleIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <circle cx="9" cy="7" r="4" />
+    <path d="M3 21v-2a4 4 0 014-4h4a4 4 0 014 4v2" />
+    <circle cx="17" cy="7" r="3" />
+    <path d="M21 21v-2a3 3 0 00-2-2.83" />
+  </svg>
+);
+
+const FoodIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <path d="M3 6h18M3 12h18M3 18h18M7 3v3M7 18v3M17 3v3M17 18v3M12 6v12" />
+  </svg>
+);
 
 interface PhotoCategory {
   id: string;
@@ -19,22 +45,22 @@ const baseCategories: Omit<PhotoCategory, 'photos'>[] = [
   {
     id: 'cat1',
     name: 'Category 1',
-    icon: WbSunnyOutlinedIcon,
+    icon: SunIcon,
   },
   {
     id: 'cat2',
     name: 'Category 2',
-    icon: LocationOnOutlinedIcon,
+    icon: LocationIcon,
   },
   {
     id: 'cat3',
     name: 'Category 3',
-    icon: PeopleOutlineIcon,
+    icon: PeopleIcon,
   },
   {
     id: 'cat4',
     name: 'Category 4',
-    icon: FastfoodOutlinedIcon,
+    icon: FoodIcon,
   }
 ];
 

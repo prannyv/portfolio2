@@ -1,16 +1,43 @@
+import dynamic from "next/dynamic";
 import { BentoGrid } from "@/components/bento/BentoGrid";
 import { Card } from "@/components/bento/Card";
-import { HackWesternCanvas } from "@/components/bento/HackWesternCanvas";
 import { CardOverlay } from "@/components/bento/CardOverlay";
+import { HackWesternCanvas, BasketballHighlights, FigmaPhoneEmbed } from "@/components/bento/DynamicComponents";
+
+// Lightweight loading placeholder
+const CardSkeleton = () => (
+  <div className="w-full h-full animate-pulse bg-gray-100 rounded-lg" />
+);
+
+// Lazy load heavy components - these contain framer-motion and complex logic
+const HackWesternLoyalty = dynamic(
+  () => import("@/components/bento/HackWesternLoyalty").then(mod => ({ default: mod.HackWesternLoyalty })),
+  { loading: () => <CardSkeleton /> }
+);
+
+const PokeloComparison = dynamic(
+  () => import("@/components/bento/PokeloComparison").then(mod => ({ default: mod.PokeloComparison })),
+  { loading: () => <CardSkeleton /> }
+);
+
+const SpotifyNowPlaying = dynamic(
+  () => import("@/components/bento/SpotifyNowPlaying").then(mod => ({ default: mod.SpotifyNowPlaying })),
+  { loading: () => <CardSkeleton /> }
+);
+
+const ToxicityDetectionCard = dynamic(
+  () => import("@/components/bento/ToxicityDetectionCard").then(mod => ({ default: mod.ToxicityDetectionCard })),
+  { loading: () => <CardSkeleton /> }
+);
+
+const MookieCard = dynamic(
+  () => import("@/components/bento/MookieCard").then(mod => ({ default: mod.MookieCard })),
+  { loading: () => <CardSkeleton /> }
+);
+
+// These are lighter components, can stay static
 import { PhotoCard } from "@/components/bento/PhotoCard";
 import { FeaturedPartners } from "@/components/bento/FeaturedPartners";
-import { FigmaPhoneEmbed } from "@/components/bento/FigmaPhoneEmbed";
-import { BasketballHighlights } from "@/components/bento/BasketballHighlights";
-import { SpotifyNowPlaying } from "@/components/bento/SpotifyNowPlaying";
-import { HackWesternLoyalty } from "@/components/bento/HackWesternLoyalty";
-import { ToxicityDetectionCard } from "@/components/bento/ToxicityDetectionCard";
-import { MookieCard } from "@/components/bento/MookieCard";
-import { PokeloComparison } from "@/components/bento/PokeloComparison";
 
 export default function Home() {
   return (

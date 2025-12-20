@@ -56,6 +56,7 @@ export function FigmaPhoneEmbed({
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock"
             allow="clipboard-write; encrypted-media"
             allowFullScreen={allowFullscreen}
+            loading="lazy"
             className="h-full w-full border-0"
           />
         </div>

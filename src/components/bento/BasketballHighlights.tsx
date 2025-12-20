@@ -489,7 +489,7 @@ export function BasketballHighlights() {
                       )}
                       muted
                       playsInline
-                      preload="auto"
+                      preload={isCurrent ? "auto" : "none"}
                       onError={(e) => {
                         console.error(`Failed to load video: ${player.videoPath}`);
                       }}

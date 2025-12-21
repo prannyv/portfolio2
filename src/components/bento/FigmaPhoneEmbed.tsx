@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 type FigmaPhoneEmbedProps = {
   src?: string;
@@ -27,9 +27,31 @@ export function FigmaPhoneEmbed({
 }: FigmaPhoneEmbedProps) {
   const iframeSrc = hideUI ? withParam(src, "hide-ui", "1") : src;
   const [hovered, setHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Only load iframe when component is visible in viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Stop observing once visible
+        }
+      },
+      { rootMargin: '100px' } // Start loading 100px before it enters viewport
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
+      ref={containerRef}
       className="relative h-full w-full"
       style={{ backgroundColor }}
       onMouseEnter={() => setHovered(true)}
@@ -50,15 +72,22 @@ export function FigmaPhoneEmbed({
             backgroundColor,
           }}
         >
-          <iframe
-            src={iframeSrc}
-            title={title}
-            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock"
-            allow="clipboard-write; encrypted-media"
-            allowFullScreen={allowFullscreen}
-            loading="lazy"
-            className="h-full w-full border-0"
-          />
+          {isVisible ? (
+            <iframe
+              src={iframeSrc}
+              title={title}
+              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock"
+              allow="clipboard-write; encrypted-media"
+              allowFullScreen={allowFullscreen}
+              loading="lazy"
+              className="h-full w-full border-0"
+            />
+          ) : (
+            // Placeholder while not visible
+            <div className="h-full w-full flex items-center justify-center">
+              <div className="text-white/40 text-sm">Loading prototype...</div>
+            </div>
+          )}
         </div>
       </div>
     </div>

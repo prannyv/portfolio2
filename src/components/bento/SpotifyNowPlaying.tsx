@@ -36,7 +36,7 @@ export function SpotifyNowPlaying() {
     // Fetch immediately
     fetchSpotifyData();
 
-    // Then fetch every 10 seconds to keep it updated
+    // Then fetch every 30 seconds to keep it updated
     const interval = setInterval(fetchSpotifyData, 30000);
 
     return () => clearInterval(interval);

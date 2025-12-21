@@ -86,6 +86,7 @@ export function HackWesternLoyalty() {
                 width={176}
                 height={176}
                 className="w-44 h-44 rounded-lg"
+                priority
               />
             </div>
           </div>

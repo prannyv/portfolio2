@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { useIdleCallback } from '@/lib/hooks';
 
 interface Player {
   id: string;
@@ -10,16 +11,16 @@ interface Player {
   number: number;
   teamColor: string; // Hex color for team
   videoPath: string; // Path to MP4 file (e.g., '/highlights/player1.mp4')
+  duration?: number; // Duration in seconds - if provided, will be used immediately for progress bar
 }
 
-// Default players - you can customize these
 const defaultPlayers: Player[] = [
-  { id: 'player1', name: 'Haliburton', number: 0, teamColor: '#fdbb30', videoPath: '/highlights/player1.mp4' },
-  { id: 'player2', name: 'Edwards', number: 5, teamColor: '#0c2340', videoPath: '/highlights/player2.mp4' },
-  { id: 'player3', name: 'Brunson', number: 11, teamColor: '#f58426', videoPath: '/highlights/player3.mp4' },
-  { id: 'player4', name: 'Doncic', number: 77, teamColor: '#00538c', videoPath: '/highlights/player4.mp4' },
-  { id: 'player5', name: 'Antetokounmpo', number: 34, teamColor: '#00471b', videoPath: '/highlights/player5.mp4' },
-  { id: 'player6', name: 'Leonard', number: 6, teamColor: '#ce1141', videoPath: '/highlights/player6.mp4' },
+  { id: 'player1', name: 'Haliburton', number: 0, teamColor: '#fdbb30', videoPath: '/highlights/player1.mp4', duration: 19 },
+  { id: 'player2', name: 'Edwards', number: 5, teamColor: '#0c2340', videoPath: '/highlights/player2.mp4', duration: 10 },
+  { id: 'player3', name: 'Brunson', number: 11, teamColor: '#f58426', videoPath: '/highlights/player3.mp4', duration: 15 },
+  { id: 'player4', name: 'Doncic', number: 77, teamColor: '#00538c', videoPath: '/highlights/player4.mp4', duration: 13 },
+  { id: 'player5', name: 'Antetokounmpo', number: 34, teamColor: '#00471b', videoPath: '/highlights/player5.mp4', duration: 9 },
+  { id: 'player6', name: 'Leonard', number: 6, teamColor: '#ce1141', videoPath: '/highlights/player6.mp4', duration: 12 },
 ];
 
 export function BasketballHighlights() {
@@ -29,8 +30,21 @@ export function BasketballHighlights() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   
+  const initializeDurations = (players: Player[]): Map<string, number> => {
+    const durations = new Map<string, number>();
+    players.forEach(player => {
+      if (player.duration) {
+        // Convert seconds to milliseconds
+        durations.set(player.id, player.duration * 1000);
+      }
+    });
+    return durations;
+  };
+  
   // Store detected video durations (playerId -> duration in ms)
-  const [videoDurations, setVideoDurations] = useState<Map<string, number>>(new Map());
+  const [videoDurations, setVideoDurations] = useState<Map<string, number>>(() => 
+    initializeDurations(defaultPlayers)
+  );
   const loadedDurationsRef = useRef<Set<string>>(new Set());
   
   // Video element refs for each player
@@ -38,9 +52,30 @@ export function BasketballHighlights() {
   const currentVideoRef = useRef<HTMLVideoElement | null>(null);
   const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const currentPlayerIdRef = useRef<string | null>(null); // Track current player by ID
+  const preloadedVideosRef = useRef<Set<string>>(new Set()); // Track which videos have been preloaded
 
   // Get selected players in order (filter maintains original player order)
   const selectedPlayersList = players.filter(p => selectedPlayers.has(p.id));
+
+  // High priority on idle: Prefetch video files using link prefetch (non-blocking)
+  // Since durations are already in code, we just need to prefetch the actual video files
+  useIdleCallback(() => {
+    players.forEach((player, index) => {
+      // Skip if already prefetched
+      if (preloadedVideosRef.current.has(player.id)) return;
+      
+      // Use link prefetch for non-blocking video file prefetching
+      // Stagger the prefetch requests slightly to avoid overwhelming the browser
+      setTimeout(() => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'video';
+        link.href = player.videoPath;
+        document.head.appendChild(link);
+        preloadedVideosRef.current.add(player.id);
+      }, index * 100); // 100ms delay between each prefetch
+    });
+  }, [players.length], 100, 'high');
 
   // Function to detect video duration using video element
   const detectVideoDuration = (videoElement: HTMLVideoElement, playerId: string): void => {
@@ -126,12 +161,14 @@ export function BasketballHighlights() {
     });
   };
 
-  // Get duration for current player's video
+  // Get duration for current player's video (in ms)
   const getCurrentVideoDuration = (): number => {
     if (selectedPlayersList.length === 0) return 5000;
     const currentPlayer = selectedPlayersList[currentPlayerIndex];
     if (!currentPlayer) return 5000;
-    return videoDurations.get(currentPlayer.id) || 5000;
+    // Use predefined duration if available, otherwise fallback to detected duration or 5000ms
+    const duration = videoDurations.get(currentPlayer.id);
+    return duration || (currentPlayer.duration ? currentPlayer.duration * 1000 : 5000);
   };
 
   // Handle video playback and auto-advance
@@ -260,7 +297,8 @@ export function BasketballHighlights() {
       let totalElapsed = 0;
       for (let i = 0; i < currentPlayerIndex; i++) {
         const player = selectedPlayersList[i];
-        totalElapsed += videoDurations.get(player.id) || 5000;
+        const duration = videoDurations.get(player.id);
+        totalElapsed += duration || (player.duration ? player.duration * 1000 : 5000);
       }
       
       // Add current video's currentTime
@@ -359,7 +397,8 @@ export function BasketballHighlights() {
     
     // Calculate total duration
     const totalDuration = selectedPlayersList.reduce((sum, player) => {
-      return sum + (videoDurations.get(player.id) || 5000);
+      const duration = videoDurations.get(player.id);
+      return sum + (duration || (player.duration ? player.duration * 1000 : 5000));
     }, 0);
     
     if (totalDuration === 0) return [];
@@ -367,7 +406,7 @@ export function BasketballHighlights() {
     let accumulatedDuration = 0;
     
     return selectedPlayersList.map((player, index) => {
-      const playerDuration = videoDurations.get(player.id) || 5000;
+      const playerDuration = videoDurations.get(player.id) || (player.duration ? player.duration * 1000 : 5000);
       const segmentStart = (accumulatedDuration / totalDuration) * 100;
       const segmentEnd = ((accumulatedDuration + playerDuration) / totalDuration) * 100;
       const segmentWidth = segmentEnd - segmentStart;
